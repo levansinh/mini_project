@@ -1,91 +1,55 @@
-import { useForm } from 'react-hook-form'
-import { Button, Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { Button } from '@nextui-org/react'
+import { toast } from 'react-toastify'
+import { FormProvider } from 'react-hook-form'
 
-import { productValidateSchema } from './validate'
-import { SubmitForm, Props } from './types'
 import TextInput from '../TextInput'
-import { useEffect, useState } from 'react'
+import { useCreateProduct, useGetProduct, useUpdateProduct } from 'src/queries/products'
+import useFormControllers from './validate'
+import { IProps, ISubmitForm } from './types'
+import Textareas from '../Textarea'
 
-const initialState = {
-  title: '',
-  thumbnail: '',
-  discountPercentage: 0,
-  price: 0,
-  category: '',
-  brand: '',
-  description: '',
-  stock: 0,
-  rating: 0,
-  id: ''
-}
-
-export default function ModalFormProduct({ onCreate, formData, isOpen, onOpenChange }: Props) {
-  const [variable, setVariable] = useState(false)
-  const create = onCreate()
-  console.log(formData)
-
-  const {
-    formState: { errors },
-    handleSubmit,
-    control,
-    reset
-  } = useForm<SubmitForm>({
-    defaultValues: formData,
-    values: formData,
-    resolver: yupResolver(productValidateSchema)
-  })
-
-  const { brand, title, thumbnail, price, rating, stock, category, description } = errors
-
-  const onSubmit = (data: SubmitForm) => {
-    console.log(data)
+export default function FormProduct({ idProduct, onClose }: IProps) {
+  const createProduct = useCreateProduct()
+  const updateProduct = useUpdateProduct(idProduct)
+  const { product } = useGetProduct(idProduct)
+  const methods = useFormControllers(product)
+  const { handleSubmit } = methods
+  const onSubmit = (dataSubmit: ISubmitForm) => {
+    if (idProduct !== 0) {
+      if (JSON.stringify(product) === JSON.stringify(dataSubmit)) {
+        toast.warning('Form has not changed its value')
+        return
+      }
+      updateProduct.mutate(dataSubmit)
+    } else {
+      createProduct.mutate(dataSubmit)
+    }
+    onClose()
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={() => {
-        formData !== initialState && reset()
-      }}
-      onOpenChange={onOpenChange}
-      scrollBehavior='inside'
-    >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>Modal Title</ModalHeader>
-            <ModalBody>
-              <form action='' onSubmit={handleSubmit(onSubmit)}>
-                <div className='flex flex-col gap-y-3 '>
-                  <TextInput control={control} label='Title' name='title' message={title?.message} />
-                  {/* <TextInput control={control} label='Price' name='price' message={price?.message} />
-                  <TextInput control={control} label='Thumbnail' name='thumbnail' message={thumbnail?.message} />
-                  <TextInput control={control} label='Rating' name='rating' message={rating?.message} />
-                  <TextInput
-                    control={control}
-                    label='discountPercentage'
-                    name='discountPercentage'
-                    message={title?.message}
-                  />
-                  <TextInput control={control} label='Stock' name='stock' message={stock?.message} /> */}
-                  <TextInput control={control} label='Category' name='category' message={category?.message} />
-                  <TextInput control={control} label='Brand' name='brand' message={brand?.message} />
-                  <TextInput control={control} label='Description' name='description' message={description?.message} />
-                </div>
-                <div className='my-3 flex items-center justify-end'>
-                  <Button color='danger' variant='light' onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color='primary' type='submit'>
-                    Action
-                  </Button>
-                </div>
-              </form>
-            </ModalBody>
-          </>
-        )}
-      </ModalContent>
-    </Modal>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex flex-col gap-y-3 '>
+          <TextInput size='sm' label='Title' name='title' />
+          <TextInput size='sm' label='Price' name='price' />
+          <TextInput size='sm' label='Thumbnail' name='thumbnail' />
+          <TextInput size='sm' label='Rating' name='rating' />
+          <TextInput label='discountPercentage' name='discountPercentage' size='sm' />
+          <TextInput size='sm' label='Stock' name='stock' />
+          <TextInput size='sm' label='Category' name='category' />
+          <TextInput size='sm' label='Brand' name='brand' />
+          <Textareas size='sm' label='Description' name='description' />
+        </div>
+        <div className='my-3 flex items-center justify-end'>
+          <Button color='danger' variant='light' onPress={onClose}>
+            Close
+          </Button>
+          <Button color='primary' type='submit'>
+            {idProduct ? 'Update' : 'Create'}
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   )
 }

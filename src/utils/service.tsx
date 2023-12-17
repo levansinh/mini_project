@@ -1,21 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosRequestConfig } from 'axios'
-
-type IConfig = AxiosRequestConfig & {
-  showSpinner?: boolean
-}
+import axios, { AxiosInstance } from 'axios'
 
 class Service {
-  instance: any
+  instance: AxiosInstance
   constructor() {
     ;(this.instance = axios.create({
-      baseURL: 'https://dummyjson.com/products',
+      baseURL: 'https://dummyjson.com',
+      timeout: 5000,
       headers: {
         'Content-Type': 'application/json'
       }
     })),
       this.instance.interceptors.request.use(
-        (config: IConfig) => {
+        (config: any) => {
           return config
         },
         (error: any) => {
@@ -25,7 +22,9 @@ class Service {
 
     this.instance.interceptors.response.use(
       (response: any) => {
-        return response
+        if (response.status === 200) {
+          return response
+        }
       },
       (error: any) => {
         return Promise.reject(error)

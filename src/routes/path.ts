@@ -1,6 +1,7 @@
 const PATH_PUBLIC = {
   home: '/',
-  cart: '/cart'
+  cart: '/cart',
+  orders: '/orders'
 }
 
 export { PATH_PUBLIC }

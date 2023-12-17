@@ -1,11 +1,11 @@
-import { Input, InputProps } from '@nextui-org/react'
+import { Textarea, TextAreaProps } from '@nextui-org/react'
 import { Controller, useFormContext } from 'react-hook-form'
-interface ITextInputProps extends InputProps {
+interface ITextareaProps extends TextAreaProps {
   name: string
   message?: string
 }
 
-export default function TextInput({ name, ...passProps }: ITextInputProps) {
+export default function Textareas({ name, ...passProps }: ITextareaProps) {
   const {
     control,
     formState: { errors }
@@ -17,7 +17,7 @@ export default function TextInput({ name, ...passProps }: ITextInputProps) {
         name={name}
         rules={{ required: true }}
         render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Input
+          <Textarea
             onBlur={onBlur}
             ref={ref}
             value={value || ''}

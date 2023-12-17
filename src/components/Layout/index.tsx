@@ -3,8 +3,8 @@ import Header from '../Header'
 
 export default function Layout() {
   return (
-    <div className=''>
-      <div className=''>
+    <div>
+      <div>
         <Header />
       </div>
       <div className='mx-[80px] py-5'>

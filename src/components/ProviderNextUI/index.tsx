@@ -1,10 +1,10 @@
-import React from 'react'
 import { NextUIProvider } from '@nextui-org/react'
+import React from 'react'
 
-interface Props {
+interface IProps {
   children: React.ReactNode
 }
 
-export default function ProviderNextUI({ children }: Props) {
+export default function ProviderNextUI({ children }: IProps) {
   return <NextUIProvider>{children}</NextUIProvider>
 }
