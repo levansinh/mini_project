@@ -17,10 +17,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'prettier/prettier': [
-      'warn',
+      'error',
       {
         arrowParens: 'always',
-        semi: false,
+        semi: true,
         trailingComma: 'none',
         tabWidth: 2,
         endOfLine: 'auto',

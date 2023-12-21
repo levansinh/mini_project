@@ -1,31 +1,29 @@
-import { Button } from '@nextui-org/react'
-import { toast } from 'react-toastify'
-import { FormProvider } from 'react-hook-form'
+import { Button } from '@nextui-org/react';
+import { FormProvider } from 'react-hook-form';
 
-import TextInput from '../TextInput'
-import { useCreateProduct, useGetProduct, useUpdateProduct } from 'src/queries/products'
-import useFormControllers from './validate'
-import { IProps, ISubmitForm } from './types'
-import Textareas from '../Textarea'
+import TextInput from '../TextInput';
+import { useCreateProduct, useGetProduct, useUpdateProduct } from 'src/queries/products';
+import useFormControllers from './validate';
+import { IProps, ISubmitForm } from './types';
+import Textareas from '../Textarea';
 
 export default function FormProduct({ idProduct, onClose }: IProps) {
-  const createProduct = useCreateProduct()
-  const updateProduct = useUpdateProduct(idProduct)
-  const { product } = useGetProduct(idProduct)
-  const methods = useFormControllers(product)
-  const { handleSubmit } = methods
+  const createProduct = useCreateProduct();
+  const updateProduct = useUpdateProduct(idProduct);
+  const { product } = useGetProduct(idProduct);
+  const methods = useFormControllers(product);
+  const {
+    handleSubmit,
+    formState: { isDirty }
+  } = methods;
   const onSubmit = (dataSubmit: ISubmitForm) => {
     if (idProduct !== 0) {
-      if (JSON.stringify(product) === JSON.stringify(dataSubmit)) {
-        toast.warning('Form has not changed its value')
-        return
-      }
-      updateProduct.mutate(dataSubmit)
+      updateProduct.mutate(dataSubmit);
     } else {
-      createProduct.mutate(dataSubmit)
+      createProduct.mutate(dataSubmit);
     }
-    onClose()
-  }
+    onClose();
+  };
 
   return (
     <FormProvider {...methods}>
@@ -45,11 +43,11 @@ export default function FormProduct({ idProduct, onClose }: IProps) {
           <Button color='danger' variant='light' onPress={onClose}>
             Close
           </Button>
-          <Button color='primary' type='submit'>
+          <Button color='primary' disabled={!isDirty} type='submit'>
             {idProduct ? 'Update' : 'Create'}
           </Button>
         </div>
       </form>
     </FormProvider>
-  )
+  );
 }

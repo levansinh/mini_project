@@ -1,14 +1,14 @@
-import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Image } from '@nextui-org/react'
-import { Link } from 'react-router-dom'
-import { Product } from 'src/common'
-import { PATH_PUBLIC } from 'src/routes/path'
-import Quantity from '../Quantity'
-import { useCartList, useTotalOrder } from 'src/store/useCartStore'
-import ActionOrder from '../ActionOrder'
+import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Image } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
+import { Product } from 'src/common';
+import { PATH_PUBLIC } from 'src/routes/path';
+import Quantity from '../Quantity';
+import { useCartList, useTotalOrder } from 'src/store/useCartStore';
+import ActionOrder from '../ActionOrder';
 
 export default function TableCart() {
-  const cart = useCartList()
-  const totalPrice = useTotalOrder()
+  const cart = useCartList();
+  const totalPrice = useTotalOrder();
 
   return (
     <div>
@@ -56,5 +56,5 @@ export default function TableCart() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

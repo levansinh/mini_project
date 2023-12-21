@@ -1,35 +1,35 @@
-import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Image } from '@nextui-org/react'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import { Product } from 'src/common'
-import ActionProduct from '../ActionProduct'
-import { useGetProductsByPage } from 'src/queries/products'
-import { PATH_PUBLIC } from 'src/routes/path'
-import CheckBoxItem from '../CheckboxItem'
-import RatingStar from '../Rating'
+import { Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Image } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Product } from 'src/common';
+import ActionProduct from '../ActionProduct';
+import { useGetProductsByPage } from 'src/queries/products';
+import { PATH_PUBLIC } from 'src/routes/path';
+import CheckBoxItem from '../CheckboxItem';
+import RatingStar from '../Rating';
 
 interface IProps {
-  page: number
-  onOpen: () => void
-  setIdProduct: React.Dispatch<React.SetStateAction<number>>
+  page: number;
+  onOpen: () => void;
+  setIdProduct: React.Dispatch<React.SetStateAction<number>>;
 }
 export default function TableProduct({ page, onOpen, setIdProduct }: IProps) {
-  const { products } = useGetProductsByPage(page)
-  const [listId, setListId] = useState<number[]>([])
+  const { products } = useGetProductsByPage(page);
+  const [listId, setListId] = useState<number[]>([]);
   const handleOnCheck = (product: Product) => {
-    const exitProd = listId.find((item) => item === product.id)
+    const exitProd = listId.find((item) => item === product.id);
     if (!exitProd) {
-      listId.push(product.id)
+      listId.push(product.id);
     } else {
-      const exitsId = listId.findIndex((item) => item === product.id)
-      listId.splice(exitsId, 1)
+      const exitsId = listId.findIndex((item) => item === product.id);
+      listId.splice(exitsId, 1);
     }
-    setListId([...listId])
-  }
+    setListId([...listId]);
+  };
   return (
     <div>
       <div className='flex items-center justify-between '>
-        <h1 className='text-3xl text-primary'>Prosduct</h1>
+        <h1 className='text-3xl text-primary'>Product</h1>
         <div className='flex gap-x-4'>
           <Button radius='md' color='success' className='text-white hover:bg-green-800 cursor-pointer'>
             <Link state={{ listId }} to={PATH_PUBLIC.orders}>
@@ -79,5 +79,5 @@ export default function TableProduct({ page, onOpen, setIdProduct }: IProps) {
         </Table>
       </div>
     </div>
-  )
+  );
 }

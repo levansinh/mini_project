@@ -1,17 +1,17 @@
-import { Modal, ModalBody, ModalContent, ModalHeader, ModalProps } from '@nextui-org/react'
+import { Modal, ModalBody, ModalContent, ModalHeader, type ModalProps } from '@nextui-org/react';
 
-import FormProduct from '../FormProduct'
+import FormProduct from '../FormProduct';
 
 interface IModalFormProductProps extends Omit<ModalProps, 'children'> {
-  idProduct: number
-  setIdProduct: React.Dispatch<React.SetStateAction<number>>
+  idProduct: number;
+  setIdProduct: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function ModalFormProduct({ idProduct, setIdProduct, ...passProps }: IModalFormProductProps) {
   const handleClose = () => {
-    setIdProduct(0)
-    passProps.onClose?.()
-  }
+    setIdProduct(0);
+    passProps.onClose?.();
+  };
   return (
     <Modal scrollBehavior='inside' {...passProps} onClose={handleClose} placement='top-center'>
       <ModalContent>
@@ -25,5 +25,5 @@ export default function ModalFormProduct({ idProduct, setIdProduct, ...passProps
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }

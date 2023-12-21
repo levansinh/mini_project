@@ -1,16 +1,16 @@
-import { Tooltip, useDisclosure } from '@nextui-org/react'
-import { FaTrash } from 'react-icons/fa'
-import ModalDelete from '../ModalDelete'
-import { useActions } from 'src/store/useCartStore'
-import { Product } from 'src/common'
+import { Tooltip, useDisclosure } from '@nextui-org/react';
+import { FaTrash } from 'react-icons/fa';
+import ModalDelete from '../ModalDelete';
+import { useActions } from 'src/store/useCartStore';
+import { Product } from 'src/common';
 
 interface IProps {
-  product: Product
+  product: Product;
 }
 
 export default function ActionOrder({ product }: IProps) {
-  const { deleteItem } = useActions()
-  const { isOpen, onOpenChange, onOpen } = useDisclosure()
+  const { deleteItem } = useActions();
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
   return (
     <div>
       <Tooltip color='danger' content='Delete product'>
@@ -20,5 +20,5 @@ export default function ActionOrder({ product }: IProps) {
         </span>
       </Tooltip>
     </div>
-  )
+  );
 }

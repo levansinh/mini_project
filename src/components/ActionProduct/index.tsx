@@ -1,36 +1,40 @@
-import { Tooltip, useDisclosure } from '@nextui-org/react'
-import { toast } from 'react-toastify'
-import { FaTrash, FaEdit, FaCartPlus } from 'react-icons/fa'
-import { Product } from 'src/common'
-import { useActions } from 'src/store/useCartStore'
-import ModalDelete from '../ModalDelete'
-import { useDeleteProduct } from 'src/queries/products'
+import { Tooltip, useDisclosure } from '@nextui-org/react';
+import { toast } from 'react-toastify';
+import { FaTrash, FaEdit, FaCartPlus } from 'react-icons/fa';
+import { Product } from 'src/common';
+import { useActions } from 'src/store/useCartStore';
+import ModalDelete from '../ModalDelete';
+import { useDeleteProduct } from 'src/queries/products';
 
 interface IProps {
-  product: Product
-  onOpen: () => void
-  setIdProduct: React.Dispatch<React.SetStateAction<number>>
+  product: Product;
+  onOpen: () => void;
+  setIdProduct: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function ActionProduct({ product, onOpen, setIdProduct }: IProps) {
-  const { isOpen: isOpenModalDelete, onOpenChange: onOpenChangeModalDelte, onOpen: onOpenModalDelete } = useDisclosure()
-  const { addToCart } = useActions()
-  const deleteProduct = useDeleteProduct()
+  const {
+    isOpen: isOpenModalDelete,
+    onOpenChange: onOpenChangeModalDelte,
+    onOpen: onOpenModalDelete
+  } = useDisclosure();
+  const { addToCart } = useActions();
+  const deleteProduct = useDeleteProduct();
   const handleAddToCart = (product: Product) => {
-    addToCart(product)
-    toast.success('Add product successfully!')
-  }
+    addToCart(product);
+    toast.success('Add product successfully!');
+  };
   const handleOpenFormEdit = () => {
-    onOpen()
-    setIdProduct(product.id)
-  }
+    onOpen();
+    setIdProduct(product.id);
+  };
   const handleDelete = () => {
     deleteProduct.mutate(product.id, {
       onSuccess: () => {
-        toast.success('Delete product successfully!')
+        toast.success('Delete product successfully!');
       }
-    })
-  }
+    });
+  };
   return (
     <>
       <div className='relative flex items-center gap-2'>
@@ -55,5 +59,5 @@ export default function ActionProduct({ product, onOpen, setIdProduct }: IProps)
         </Tooltip>
       </div>
     </>
-  )
+  );
 }

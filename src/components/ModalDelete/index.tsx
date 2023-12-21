@@ -1,7 +1,7 @@
-import { Modal, ModalContent, ModalHeader, ModalFooter, Button, ModalProps } from '@nextui-org/react'
+import { Modal, ModalContent, ModalHeader, ModalFooter, Button, type ModalProps } from '@nextui-org/react';
 
 interface IModalDeleteProps extends Omit<ModalProps, 'children'> {
-  onDelete: () => void
+  onDelete: () => void;
 }
 
 export default function ModalDelete({ onDelete, ...passProps }: IModalDeleteProps) {
@@ -23,5 +23,5 @@ export default function ModalDelete({ onDelete, ...passProps }: IModalDeleteProp
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }

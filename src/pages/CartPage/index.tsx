@@ -1,11 +1,11 @@
-import TableCart from 'src/components/TableCart'
+import TableCart from 'src/components/TableCart';
 
 function CartPage() {
   return (
     <div>
       <TableCart />
     </div>
-  )
+  );
 }
 
-export const Component = CartPage
+export const Component = CartPage;

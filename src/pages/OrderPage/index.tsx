@@ -1,6 +1,6 @@
-import TableOrder from 'src/components/TableOrders'
+import TableOrder from 'src/components/TableOrders';
 
 function OrderPage() {
-  return <TableOrder />
+  return <TableOrder />;
 }
-export const Component = OrderPage
+export const Component = OrderPage;

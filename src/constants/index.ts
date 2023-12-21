@@ -9,4 +9,4 @@ export const initialState = {
   stock: 0,
   rating: 0,
   id: 0
-}
+};
